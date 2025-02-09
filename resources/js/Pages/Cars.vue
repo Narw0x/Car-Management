@@ -3,11 +3,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
-import { defineProps } from 'vue';
+import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
 
-import { ref, onMounted } from 'vue';
+const cars = ref([]);
 
+// Message
 const message = ref(null);
 const isVisible = ref(false);
 onMounted(() => {
@@ -24,8 +25,7 @@ onMounted(() => {
 });
 
 
-
-const cars = ref([]);
+// Search cars
 const loaded = ref(true);
 const searchData = ref('');
 const searchCars = async () => {
@@ -33,8 +33,6 @@ const searchCars = async () => {
         loaded.value = true;
         return;
     }
-
-
     await axios.get(route('cars.search', {search:searchData.value }))
     .then(response => {
         cars.value = response.data.cars;
@@ -45,6 +43,7 @@ const searchCars = async () => {
     });
 }
 
+// Delete car
 const deleteMessage = ref(null); 
 const isMessageVisible = ref(false);
 const deleteCar = async (id) => {
@@ -61,6 +60,7 @@ const deleteCar = async (id) => {
     })
 }
 
+// Props
 const props = defineProps({
   errors: Object,
 });
@@ -73,28 +73,20 @@ const props = defineProps({
     <AuthenticatedLayout>
         <template #header>
             <div class="d-flex justify-content-between">
-                <h2
-                    class="fw-bold"
-                >
-                    Cars
-                </h2>
+                <h2 class="fw-bold">Cars</h2>
                 <Link
                     :href="route('dashboard.cars.add')"
                 >
                     <button class="btn btn-primary">Add Car</button>
                 </Link>
             </div>
-            
         </template>
-
         <div v-if="isVisible" class="alert alert-success container text-center mt-8 mb-0">
             {{ message }}
         </div>
-
         <div v-if="isMessageVisible" class="container text-center alert alert-success mt-8 mb-0">
             {{ deleteMessage }}
         </div>
-
         <div v-if="props.errors.error" class="container text-center alert alert-danger mt-8 mb-0">
             <ul>
                 <li v-for="error in props.errors" :key="error">
@@ -102,8 +94,6 @@ const props = defineProps({
                 </li>
             </ul>
         </div>
-
-
         <div class="container grid grid-cols-1 gap-4 mt-8 bg-body p-4 rounded shadow">
             <form class="d-flex flex-col gap-2">
                 <label for="car-name" class="fw-bold">Search cars by name</label>
@@ -121,7 +111,6 @@ const props = defineProps({
                 </div>
             </form>
         </div>
-
         <!-- show cars -->
         <div v-if="!loaded" class="container grid grid-cols-1 gap-4 mt-8 bg-body p-4 rounded shadow">
             <div v-if="cars.length > 0 && !loaded">

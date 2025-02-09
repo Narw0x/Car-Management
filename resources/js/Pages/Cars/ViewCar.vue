@@ -3,16 +3,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
+import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
 
-import { defineProps, ref, onMounted } from 'vue';
-
-
+// Props
 const props = defineProps({
   car: Object,
 });
 
-
+// Message
 const message = ref(null);
 const isVisible = ref(false);
 onMounted(() => {
@@ -29,7 +28,7 @@ onMounted(() => {
 });
 
 
-
+// Delete car
 const deleteCar = async (id) => {
     await axios.delete(route('dashboard.cars.destroy', {id: id}))
     .then(response => {
@@ -39,6 +38,7 @@ const deleteCar = async (id) => {
     })
 }
 
+// Delete part
 const deletePart = async (id) => {
     await axios.delete(route('dashboard.parts.destroy', {id: id}))
     .then(response => {
@@ -51,16 +51,11 @@ const deletePart = async (id) => {
 </script>
 
 <template>
-     <Head title="Car" />
-
+     <Head title="View Car" />
     <AuthenticatedLayout>
         <template #header>
             <div class="d-flex justify-content-between">
-                <h2
-                    class="fw-bold"
-                >
-                    Cars
-                </h2>
+                <h2 class="fw-bold">Cars</h2>
                 <div class="d-flex gap-2">
                     <Link
                         :href="route('dashboard.cars')"
@@ -73,15 +68,11 @@ const deletePart = async (id) => {
                         <button class="btn btn-primary">Add Part</button>
                     </Link>
                 </div>
-                
             </div>
-            
         </template>
-
         <div v-if="isVisible" class="alert alert-success container text-center my-8">
             {{ message }}
         </div>
-
         <div class="container grid grid-cols-1  mt-16 bg-body p-4 rounded shadow">
             <h2 class="fw-bold">Car Details</h2>
             <table class="table table-bordered">
@@ -109,7 +100,6 @@ const deletePart = async (id) => {
                     </tr>
                 </tbody>
             </table>
-
             <div>
                 <h2 class="fw-bold">Parts</h2>
                 <div>

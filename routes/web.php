@@ -27,6 +27,7 @@ Route::get('/car/{id}', [CarController::class, 'car'])
     ->middleware(['auth', 'verified'])
     ->name('car.byId');
 
+//search
 Route::get('/cars/search/{search}', [CarController::class, 'search'])
     ->middleware(['auth', 'verified'])
     ->name('cars.search');
@@ -39,6 +40,7 @@ Route::post('/dashboard/cars', [CarController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard.cars.store');
 
+//show
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/cars/{id}', [CarController::class, 'show'])
     ->name('dashboard.cars.show');
@@ -46,6 +48,7 @@ Route::middleware('auth')->group(function () {
     ->name('dashboard.cars.destroy');
 });
 
+//edit
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/cars/{id}/edit', [CarController::class, 'edit'])
         ->name('dashboard.cars.edit');
@@ -61,6 +64,7 @@ Route::get('/dashboard/parts', function () {
     return Inertia::render('Parts');
 })->middleware(['auth', 'verified'])->name('dashboard.parts');
 
+//search
 Route::get('/parts/search/{search}', [PartController::class, 'search'])
     ->middleware(['auth', 'verified'])
     ->name('parts.search');
@@ -75,6 +79,7 @@ Route::post('/dashboard/parts', [PartController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard.parts.store');
 
+//show
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/parts/{id}', [PartController::class, 'show'])
     ->name('dashboard.parts.show');
@@ -82,6 +87,7 @@ Route::middleware('auth')->group(function () {
     ->name('dashboard.parts.destroy');
 });
 
+//edit
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/parts/{id}/edit', [PartController::class, 'edit'])
         ->name('dashboard.parts.edit');

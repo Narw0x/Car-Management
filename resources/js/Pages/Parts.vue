@@ -6,9 +6,12 @@ import { Link } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted } from 'vue';
 import axios from 'axios';
 
+const parts = ref([]);
+
+
+// Message
 const message = ref(null);
 const isVisible = ref(false);
-
 onMounted(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlMessage = urlParams.get('message');
@@ -23,8 +26,7 @@ onMounted(() => {
 });
 
 
-
-const parts = ref([]);
+// Search parts
 const searchData = ref('');
 const loaded = ref(true);
 const searchCParts = async () => {
@@ -43,9 +45,9 @@ const searchCParts = async () => {
     });
 }
 
+// Delete part
 const deleteMessage = ref(null); 
 const isMessageVisible = ref(false);
-
 const deletePart = async (id) => {
     await axios.delete(route('dashboard.parts.destroy', {id: id}))
     .then(response => {
@@ -64,6 +66,7 @@ const deletePart = async (id) => {
     })
 }
 
+//Props
 const props = defineProps({
   errors: Object,
 });
@@ -71,28 +74,19 @@ const props = defineProps({
 </script>
 
 <template>
-     <Head title="Parts" />
-
+    <Head title="Parts" />
     <AuthenticatedLayout>
         <template #header>
             <div class="d-flex justify-content-between">
-                <h2
-                    class="fw-bold"
-                >
-                    Parts
-                </h2>
+                <h2 class="fw-bold">Parts</h2>
             </div>
-            
         </template>
-
         <div v-if="isVisible" class="alert alert-success container text-center my-8">
             {{ message }}
         </div>
-
         <div v-if="isMessageVisible" class="container text-center alert alert-success my-8">
             {{ deleteMessage }}
         </div>
-
         <div v-if="props.errors.error" class="container text-center alert alert-danger my-8">
             <ul>
                 <li v-for="error in props.errors" :key="error">
@@ -100,8 +94,6 @@ const props = defineProps({
                 </li>
             </ul>
         </div>
-
-
         <div class="container d-grid grid-cols-1 gap-4 mt-8 bg-body p-4 rounded shadow">
             <form class="d-flex flex-col gap-2">
                 <label for="car-name" class="fw-bold">Search parts by name</label>
@@ -117,11 +109,8 @@ const props = defineProps({
                         Search
                     </button>
                 </div>
-                
-
             </form>
         </div>
-
         <div v-if="!loaded" class="container grid grid-cols-1 gap-4 mt-8 bg-body p-4 rounded shadow">
             <div v-if="parts.length > 0 && !loaded">
                 <table class="table table-bordered">

@@ -66,6 +66,7 @@ class CarController extends Controller
                 'registration_number' => ['nullable', 'string', 'max:17', 'required_if:is_registered,true'],
                 'is_registered' => ['required', 'boolean'],
             ]);
+
             if ($validated['is_registered'] && Car::where('registration_number', $validated['registration_number'])->exists()) {
                 return response()->json([
                     'status' => 'error',
@@ -84,7 +85,6 @@ class CarController extends Controller
                 'status' => 'success',
                 'message' => 'Car successfully updated.',
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',

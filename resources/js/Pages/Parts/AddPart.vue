@@ -4,16 +4,17 @@ import { Head } from '@inertiajs/vue3';
 import { ref, defineProps } from 'vue';
 import axios from 'axios';
 
+// Props
 const props = defineProps({
   id: String,
 });
 
-
+// Init
 const name = ref('');
 const serial_number = ref('');
+const errorMessage = ref('');
 
-let errorMessage = ref('');
-
+// Get car
 const car = ref([]);
 const getCar = async () => {
     await axios.get(route('car.byId', {id: props.id}))
@@ -24,24 +25,21 @@ const getCar = async () => {
         console.log(error);
     })
 }
-
 getCar();
 
-
+// Add part
 const addPart = async () => {
     const data = {
         name: name.value,
         serial_number: serial_number.value,
         car_id: +props.id
     }
-
     await axios.post(route('dashboard.parts.store'), data)
     .then(response => {
         if(response.data.status === 'success') {
             errorMessage.value = '';
             name.value = '';
             serial_number.value = '';
-            
             window.location.href = route('dashboard.cars.show', {id:+props.id,  message: response.data.message });
         }
         if(response.data.status === 'error') {
@@ -54,31 +52,21 @@ const addPart = async () => {
     })
 }
 
+const pageBack = () => window.location.href = route('dashboard.cars');
 
-
-const pageBack = () => {
-    window.location.href = route('dashboard.cars');
-}
 </script>
 
 <template>
-    <Head title="Parts" />
+    <Head title="Add Part" />
     <AuthenticatedLayout>
         <template #header>
             <div class="d-flex justify-content-between">
-                <h2
-                    class="fw-bold"
-                >
-                    Parts
-                </h2>
+                <h2 class="fw-bold">Parts</h2>
             </div>
         </template>
-
         <div v-if="errorMessage" class="container text-center alert alert-danger my-8">
             {{ errorMessage }}
         </div>
-
-
         <div class="container grid grid-cols-1 gap-4 mt-16 bg-body p-4 rounded shadow">
             <h2 class="fw-bold">Add Part</h2>
             <div v-if="car">
@@ -119,7 +107,6 @@ const pageBack = () => {
                             class="form-control"
                         >
                     </div>
-
                 </div>
                 <div class="d-flex gap-2 ">
                     <button class="btn btn-secondary" @click="pageBack">

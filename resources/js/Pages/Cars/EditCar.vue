@@ -4,23 +4,24 @@ import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import axios from 'axios';
 
+// Props
 const props = defineProps({
   car: Object,
 });
 
+// Init
 const is_registered = ref(props.car.is_registered);
 const registration_number = ref(props.car.registration_number);
 const name = ref(props.car.name);
+const errorMessage = ref('');
 
-let errorMessage = ref('');
-
+// Update car
 const updateCar = async () => {
     const data = {
         name: name.value,
         is_registered: is_registered.value,
         registration_number: registration_number.value
     }
-
     await axios.patch(route('dashboard.cars.update', {id: props.car.id}), data)
     .then(response => {
         if(response.data.status === 'success') {
@@ -28,7 +29,6 @@ const updateCar = async () => {
             name.value = '';
             is_registered.value = false;
             registration_number.value = '';
-            
             window.location.href = route('dashboard.cars', { message: response.data.message });
         }
         if(response.data.status === 'error') {
@@ -40,32 +40,20 @@ const updateCar = async () => {
     })
 }
 
-const pageBack = () => {
-    window.location.href = route('dashboard.cars');
-}
-
+const pageBack = () => window.location.href = route('dashboard.cars');
 </script>
 
 <template>
-     <Head title="Cars" />
-
+    <Head title="Edit Car" />
     <AuthenticatedLayout>
         <template #header>
             <div class="d-flex justify-content-between">
-                <h2
-                    class="fw-bold"
-                >
-                    Cars
-                </h2>
+                <h2 class="fw-bold">Cars</h2>
             </div>
-            
         </template>
-
         <div v-if="errorMessage" class="container text-center alert alert-danger my-8">
             {{ errorMessage }}
         </div>
-
-
         <div class="container grid grid-cols-1 gap-4 mt-16 bg-body p-4 rounded shadow">
             <form class="d-flex flex-col gap-2" @submit.prevent="updateCar">
                 <div class="d-flex flex-column gap-2">
