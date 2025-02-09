@@ -17,8 +17,9 @@ class Part extends Model
      */
     protected $fillable = [
         'name',
-        'serialnumber',
-        'car_id'
+        'serial_number',
+        'car_id',
+        'searchName'
     ];
 
 

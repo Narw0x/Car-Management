@@ -17,17 +17,14 @@ class Car extends Model {
     protected $fillable = [
         'name',
         'registration_number',
-        'is_registered'
+        'is_registered',
+        'searchName'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
-        'is_registered' => 'boolean',
+        'is_registered' => 'boolean'
     ];
+
 
     public function parts()
     {
