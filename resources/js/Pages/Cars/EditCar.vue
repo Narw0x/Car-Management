@@ -20,7 +20,7 @@ const updateCar = async () => {
     const data = {
         name: name.value,
         is_registered: is_registered.value,
-        registration_number: registration_number.value
+        registration_number: is_registered.value ? registration_number.value : ''
     }
     await axios.patch(route('dashboard.cars.update', {id: props.car.id}), data)
     .then(response => {
