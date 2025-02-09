@@ -1,6 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import Cards from '@/Components/Cards.vue';
+
+
 </script>
 
 <template>
@@ -15,16 +18,19 @@ import { Head } from '@inertiajs/vue3';
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-                >
-                    <div class="p-6 text-gray-900">
-                        You're logged in!
-                    </div>
-                </div>
-            </div>
+        <div class="container grid grid-cols-1 gap-4 md:grid-cols-2 px-0 pt-16">
+            <Cards
+                :href="route('dashboard.cars')"
+            >
+                <h2 class="text-center">Cars</h2>
+            </Cards>
+
+            <Cards
+                :href="route('dashboard.parts')"
+            >
+                <h2 class="text-center">Parts</h2>
+            </Cards>
+            
         </div>
     </AuthenticatedLayout>
 </template>
