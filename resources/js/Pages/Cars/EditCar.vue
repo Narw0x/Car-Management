@@ -57,7 +57,7 @@ const pageBack = () => window.location.href = route('dashboard.cars');
         <div class="container grid grid-cols-1 gap-4 mt-16 bg-body p-4 rounded shadow">
             <form class="d-flex flex-col gap-2" @submit.prevent="updateCar">
                 <div class="d-flex flex-column gap-2">
-                    <label for="name" class="fw-bold">Car Name</label>
+                    <label for="name" class="form-label fw-bold">Car Name</label>
                     <input
                         id="name"
                         type="text"
@@ -68,7 +68,7 @@ const pageBack = () => window.location.href = route('dashboard.cars');
                     />
                 </div>
                 <div class="" v-if="is_registered">
-                    <label for="registration_number" class="form-label">Registration Number</label>
+                    <label for="registration_number" class="form-label fw-bold">Registration Number</label>
                     <input 
                     v-model="registration_number" 
                     type="text" 
@@ -79,7 +79,7 @@ const pageBack = () => window.location.href = route('dashboard.cars');
                     />
                 </div>
                 <div class="mb-3 d-flex gap-2">
-                    <label for="is_registered" class="form-label">Is Registered</label>
+                    <label for="is_registered" class="form-label fw-bold">Is Registered</label>
                     <input 
                         v-model="is_registered" 
                         type="checkbox" 

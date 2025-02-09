@@ -96,6 +96,10 @@ class CarController extends Controller
     public function destroy($id)
     {
         try {
+            $parts = Car::findOrFail($id)->parts;
+            foreach ($parts as $part) {
+                $part->delete();
+            }
             $car = Car::findOrFail($id);
             $car->delete();
 
