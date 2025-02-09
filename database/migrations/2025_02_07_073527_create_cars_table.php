@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('registration_number')->nullable();
             $table->unique('registration_number');
             $table->boolean('is_registered')->default(false);
+            $table->string('searchName');
             $table->timestamps();
         });
     }
